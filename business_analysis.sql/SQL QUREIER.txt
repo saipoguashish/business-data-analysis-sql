@@ -1,0 +1,60 @@
+select 
+	order_id, product_id, quantity, net_sales, profit
+ FROM order_items
+ where net_sales > 500
+ ORDER BY profit DESC;
+
+
+SELECT 
+	sales_channel,payment_method,
+    COUNT(order_id) as total_orders,
+    ROUND(SUM(net_sales)) AS total_Revenue,
+    ROUND(AVG(net_sales)) AS avg_order_value
+ FROM ecommerce_sales
+ GROUP by sales_channel, payment_method
+ ORDER BY total_Revenue;
+
+
+SELECT
+	p.product_category,
+    p.brand,
+    SUM(oi.quantity) AS Unit_sold,
+    ROUND(SUM(oi.net_sales)) AS total_sales,
+    ROUND(SUM(oi.profit)) AS total_profit
+ from order_items oi
+ JOIN product_catalog p
+ 	on oi.product_id = p.product_id
+ GROUP by product_category, brand
+ ORDER by total_profit DESC;
+
+
+SELECT 
+	c.region,
+    c.gender,
+    p.product_category,
+    COUNT(DISTINCT o.order_id) as unique_orders,
+    ROUND(SUM(oi.net_sales)) AS total_revenue,
+    ROUND(SUM(oi.profit)) AS total_profit
+from order_items oi
+JOIN ecommerce_sales o
+	on oi.order_id = o.order_id
+JOIN customer_master c
+	on o.customer_id = c.customer_id
+JOIN product_catalog p
+	on oi.product_id = p.product_id
+where order_date is not NULL
+GROUP by c.region, c.gender, p.product_category
+order by c.region, total_revenue DESC;
+
+
+SELECT 
+    SUBSTR(o.order_date, 1, 7) AS order_month,
+    COUNT(DISTINCT o.order_id) AS total_orders,
+    SUM(oi.quantity) AS total_units_sold,
+    ROUND(SUM(oi.net_sales), 2) AS monthly_revenue,
+    ROUND(SUM(oi.profit), 2) AS monthly_profit
+FROM ecommerce_sales o
+JOIN order_items oi 
+    ON o.order_id = oi.order_id
+GROUP BY order_month
+ORDER BY order_month ASC;
