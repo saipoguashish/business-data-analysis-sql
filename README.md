@@ -6,10 +6,10 @@ Performed end-to-end exploratory data analysis on a 4-table relational retail da
 ## Database Schema
 ![Database Schema](schema_diagram.png)
 
-* **`customers`**: Customer demographics and regional segmentation (`customer_id` PK)
-* **`orders`**: Transaction headers, dates, sales channels, and payment methods (`order_id` PK, `customer_id` FK)
-* **`order_items`**: Line-item quantities, net sales, costs, and profit (`order_id` FK, `product_id` FK)
-* **`products`**: Product catalog, categories, brands, and ratings (`product_id` PK)
+* **`customers`**: Customer demographics and regional segmentation (`customer_id`)
+* **`orders`**: Transaction headers, dates, sales channels, and payment methods (`order_id` , `customer_id` )
+* **`order_items`**: Line-item quantities, net sales, costs, and profit (`order_id` , `product_id` )
+* **`products`**: Product catalog, categories, brands, and ratings (`product_id`)
 
 ## Skills Demonstrated
 * **Data Retrieval & Filtering**: Used `SELECT`, `WHERE`, and `ORDER BY` to isolate high-value transactions.
